@@ -8,7 +8,7 @@ canvas.height = 110
 const image = new Image(85, 85)
 image.src = "./brasao.png"
 
-const logo = new Image(90, 90)
+// const logo = new Image(90, 90)
 
 const siglas = {
     "de": [18, 75, "65px"],
@@ -90,7 +90,7 @@ function atualiza_canvas() {
     ctx.fillText(get("nome").value, 110, 25)
 
     ctx.drawImage(image, 460, 15, image.width, image.height)
-    ctx.drawImage(logo, 5, 5, logo.width, logo.height)
+    // ctx.drawImage(logo, 5, 5, logo.width, logo.height)
 
     const emojis = get("emojis").checked ? true : false
 
@@ -233,21 +233,21 @@ function redefine_cor() {
     get("cor_padrao").style.display = "none"
 }
 
-function previewImage() {
+// function previewImage() {
 
-    let file = get("logo").files
+//     let file = get("logo").files
 
-    if (file.length > 0) {
-        let fileReader = new FileReader()
+//     if (file.length > 0) {
+//         let fileReader = new FileReader()
 
-        fileReader.onload = function (event) {
-            logo.src = event.target.result
-            atualiza_canvas()
-        }
+//         fileReader.onload = function (event) {
+//             logo.src = event.target.result
+//             atualiza_canvas()
+//         }
 
-        fileReader.readAsDataURL(file[0])
-    }
-}
+//         fileReader.readAsDataURL(file[0])
+//     }
+// }
 
 function get(alvo) {
 
