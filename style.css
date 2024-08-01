@@ -1,8 +1,16 @@
+* {
+    transition: all .3s;
+}
+
 #entradas {
-    width: 860px;
+    width: 90%;
+    display: grid;
+    column-gap: 5%;
+    margin-left: 5%;
     margin-top: 50px;
-    margin-left: 25%;
     margin-bottom: 25px;
+    grid-template-columns: 45% 50%;
+    background-color: #f2f2f2;
 }
 
 body {
@@ -12,23 +20,23 @@ body {
 input[type=text],
 select {
     width: 100%;
-    padding: 12px 20px;
     margin: 8px 0;
+    padding: 12px 20px;
+    border-radius: 4px;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 4px;
     box-sizing: border-box;
 }
 
 input[type=submit] {
     width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
     border: none;
-    border-radius: 4px;
+    color: white;
+    margin: 8px 0;
     cursor: pointer;
+    border-radius: 4px;
+    padding: 14px 20px;
+    background-color: #4CAF50;
 }
 
 input[type=submit]:hover {
@@ -36,9 +44,8 @@ input[type=submit]:hover {
 }
 
 div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
     padding: 20px;
+    border-radius: 5px;
 }
 
 canvas {
@@ -54,4 +61,11 @@ canvas {
 
 #cor_padrao {
     display: none;
+}
+
+#ShowButton {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px black solid;
 }
