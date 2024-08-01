@@ -14,20 +14,16 @@
         <label for="nome">Nome
             <input type="text" id="nome" placeholder="Seu nome" onkeyup="atualiza_canvas()"></label>
 
-        <label for="cargo">Cargo
-            <input type="text" id="cargo" placeholder="Seu cargo" value="Chefe" onkeyup="atualiza_canvas()"></label>
-
         <label for="email">E-mail
             <input type="text" id="email" placeholder="Seu e-mail" value="...@tuiuti.sp.gov.br"
                 onkeyup="atualiza_canvas()"></label>
 
+        <label for="cargo">Cargo
+            <input type="text" id="cargo" placeholder="Seu cargo" onkeyup="atualiza_canvas()"></label>
+
         <label for="telefone">Telefone
             <input type="text" id="telefone" placeholder="Telefone para contato" value="(11) 4015-XYZW – Ramal X"
                 onkeyup="atualiza_canvas()"></label>
-
-        <label for="endereco">Endereço
-            <input type="text" id="endereco" placeholder="Seu endereço de trabalho"
-                value="Rua Zeferino de Lima, 117 – Centro – Tuiuti / SP" onkeyup="atualiza_canvas()"></label>
 
         <label for="sigla">Departamento
             <select id="sigla" name="sigla" onchange="atualiza_canvas()">
@@ -50,10 +46,21 @@
                 <option value="dtcj">Departamento de Turismo, Cultura e Juventude</option>
             </select></label>
 
+        <label for="endereco">Endereço
+            <input type="text" id="endereco" placeholder="Seu endereço de trabalho"
+                value="Rua Zeferino de Lima, 117 – Centro – Tuiuti / SP" onkeyup="atualiza_canvas()"></label>
+
         <label for="subdivisao">Subdivisão
             <input type="text" id="subdivisao" placeholder="A subdivisão" onkeyup="atualiza_canvas()"></label>
 
-        <div></div>
+        <div id="tab_cores">
+            <div><input type="color" id="check_cor_linha" value="#616161" onchange="atualiza_canvas()"> Linha secundária
+            </div>
+            <div><input type="color" id="check_cor_links" value="#2b63d4" onchange="atualiza_canvas()"> Links</div>
+            <div><input type="color" id="check_cor_destaque" value="#dd3333" onchange="atualiza_canvas()"> Cor destaque
+            </div>
+            <input id="ShowButton" type="button" onclick="mudar_tema()" value="🌛">
+        </div>
 
         <!-- <label for="logo">Logo customizada <br><br> -->
         <!-- <input type="file" id="logo" onchange="previewImage()"></label> -->
@@ -71,16 +78,6 @@
             <span id="cor_padrao"><input type="checkbox" id="sub_cor_padrao" onchange="redefine_cor()"> Utilizar cores
                 padrões</span>
         </div>
-
-        <div id="tab_cores">
-            <div><input type="color" id="check_cor_linha" value="#616161" onchange="atualiza_canvas()"> Linha secundária
-            </div>
-            <div><input type="color" id="check_cor_links" value="#2b63d4" onchange="atualiza_canvas()"> Links</div>
-            <div><input type="color" id="check_cor_destaque" value="#dd3333" onchange="atualiza_canvas()"> Cor destaque
-            </div>
-        </div>
-
-        <input id="ShowButton" type="button" onclick="mudar_tema()" value="🌛">
     </div>
 
 </body>
