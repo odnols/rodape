@@ -9,14 +9,15 @@ const image = new Image(85, 85)
 image.src = "./brasao.png"
 
 const siglas = {
+    "rh": [15, 75, "65px"],
     "de": [18, 75, "65px"],
     "dj": [22, 75, "65px"],
+    "lc": [21, 75, "65px"],
     "dp": [16, 75, "65px"],
     "ds": [16, 75, "65px"],
     "daf": [10, 75, "55px"],
     "das": [7, 75, "55px"],
     "del": [13, 75, "55px"],
-    "dlc": [10, 75, "55px"],
     "dvs": [6, 75, "55px"],
     "doe": [8, 75, "55px"],
     "cras": [11, 68, "37px"],
