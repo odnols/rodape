@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gerador de rodapé</title>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="./brasao.png">
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id="entradas">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" placeholder="Seu nome" onkeyup="atualiza_canvas()">
+
+        <label for="cargo">Cargo</label>
+        <input type="text" id="cargo" placeholder="Seu cargo" onkeyup="atualiza_canvas()">
+
+        <label for="email">E-mail</label>
+        <input type="text" id="email" placeholder="Seu e-mail" value="...@tuiuti.sp.gov.br" onkeyup="atualiza_canvas()">
+
+        <label for="telefone">Telefone</label>
+        <input type="text" id="telefone" placeholder="Telefone para contato" value="(11) 4015-XYZW – Ramal X"
+            onkeyup="atualiza_canvas()">
+
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" placeholder="Seu endereço de trabalho"
+            value="Rua Zeferino de Lima, 117 – Centro – Tuiuti / SP" onkeyup="atualiza_canvas()">
+
+        <label for="sigla">Departamento</label>
+        <select id="sigla" name="sigla" onchange="atualiza_canvas()">
+            <option value="de">Departamento de Educação</option>
+            <option value="dj">Departamento Jurídico</option>
+            <option value="dp">Departamento de Planejamento</option>
+            <option value="ds">Departamento de Saúde</option>
+            <option value="daf">Departamento de Administração e Finanças</option>
+            <option value="das">Departamento de Assistência Social</option>
+            <option value="del">Departamento de Esporte e Lazer</option>
+            <option value="dlc">Departamento de Licitações e Compras</option>
+            <option value="doe">Departamento de Obras e Engenharia</option>
+            <option value="dvs">Divisão de Vigilância Sanitária</option>
+            <option value="cras">Centro de Referência de Assistência Social</option>
+            <option value="dama">Departamento de Agricultura e Meio Ambiente</option>
+            <option value="dsur">Departamento de Serviços Urbanos e Rurais</option>
+            <option value="dtcj">Departamento de Turismo, Cultura e Juventude</option>
+        </select>
+
+        <label for="subdivisao">Subdivisão</label>
+        <input type="text" id="subdivisao" placeholder="A subdivisão" onkeyup="atualiza_canvas()">
+
+        <input type="checkbox" id="sub_div_check" onchange="atualiza_canvas()" checked="true"> Mostrar subdivisão <br>
+        <input type="checkbox" id="emojis" onchange="atualiza_canvas()" checked="true"> Emojis <br>
+        <input type="checkbox" id="borda_triangular" onchange="atualiza_canvas()" checked="true"> Borda triangular <br>
+        <input type="checkbox" id="sub_sombra" onchange="atualiza_canvas()" checked="true"> Sobreamento <br><br>
+
+        <div id="tab_cores">
+            <div><input type="color" id="check_cor_linha" value="#616161" onchange="atualiza_canvas()"> Linha secundária
+            </div>
+            <div><input type="color" id="check_cor_links" value="#2b63d4" onchange="atualiza_canvas()"> Links</div>
+            <div><input type="color" id="check_cor_destaque" value="#dd3333" onchange="atualiza_canvas()"> Cor destaque
+            </div>
+        </div>
+
+        <div id="cor_padrao"><input type="checkbox" id="sub_cor_padrao" onchange="redefine_cor()"> Utilizar cores
+            padrões</div>
+    </div>
+
+</body>
+
+<script type="text/javascript" src="engine.js"></script>
+
+</html>
