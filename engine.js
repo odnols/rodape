@@ -9,12 +9,14 @@ const image = new Image(85, 85)
 image.src = "./brasao.png"
 
 const siglas = {
-    "rh": [15, 75, "65px"],
     "de": [18, 75, "65px"],
+    "dc": [15, 75, "65px"],
     "dj": [22, 75, "65px"],
-    "lc": [21, 75, "65px"],
     "dp": [16, 75, "65px"],
     "ds": [16, 75, "65px"],
+    "gp": [16, 75, "65px"],
+    "lc": [21, 75, "65px"],
+    "rh": [15, 75, "65px"],
     "daf": [10, 75, "55px"],
     "das": [7, 75, "55px"],
     "del": [13, 75, "55px"],
@@ -41,7 +43,7 @@ function atualiza_canvas() {
     let cor_destaque_2 = hexToRgb(cor_destaque)
     cor_destaque_2 = `rgb(${cor_destaque_2.r - 31}, ${cor_destaque_2.g - 22}, ${cor_destaque_2.b - 22})`
 
-    if (cor_destaque !== "#dd3333")
+    if (cor_destaque !== "#dd3333" || cor_linha !== "#616161" || cor_links !== "#2b63d4")
         document.getElementById("cor_padrao").style.display = "block"
 
     ctx.shadowOffsetX = 3
@@ -170,6 +172,17 @@ function atualiza_canvas() {
         ctx.lineTo(901, 0)
         ctx.fill()
 
+        if ((document.getElementById("cargo").value).includes("Chefe")) {
+
+            ctx.strokeStyle = cor_destaque
+            ctx.lineWidth = 10
+
+            ctx.beginPath()
+            ctx.moveTo(0, 0)
+            ctx.lineTo(901, 0)
+            ctx.stroke()
+        }
+
         ctx.fillStyle = cor_destaque
         ctx.beginPath()
         ctx.moveTo(800, 0)
@@ -199,5 +212,6 @@ function redefine_cor() {
     document.getElementById("check_cor_linha").value = "#909090"
     atualiza_canvas()
 
+    document.getElementById("sub_cor_padrao").checked = false
     document.getElementById("cor_padrao").style.display = "none"
 }
