@@ -8,26 +8,20 @@ canvas.height = 110
 const image = new Image(85, 85)
 image.src = "./brasao.png"
 
-// const logo = new Image(90, 90)
+const canvas_timbre = document.createElement("canvas")
+document.body.appendChild(canvas_timbre)
+const ctx_timbre = canvas_timbre.getContext("2d")
+
+canvas_timbre.width = 900
+canvas_timbre.height = 140
+
+const image_timbre = new Image(120, 120)
+image_timbre.src = "./brasao.png"
 
 const siglas = {
-    "de": [18, 75, "65px"],
-    "dc": [15, 75, "65px"],
-    "dj": [22, 75, "65px"],
-    "dp": [16, 75, "65px"],
-    "ds": [16, 75, "65px"],
-    "gp": [16, 75, "65px"],
-    "lc": [21, 75, "65px"],
-    "rh": [15, 75, "65px"],
-    "daf": [10, 75, "55px"],
-    "das": [7, 75, "55px"],
-    "del": [13, 75, "55px"],
-    "dvs": [6, 75, "55px"],
-    "doe": [8, 75, "55px"],
-    "cras": [11, 68, "37px"],
-    "dsur": [10, 68, "37px"],
-    "dtcj": [15, 68, "37px"],
-    "dama": [7, 68, "37px"],
+    2: "65px",
+    3: "55px",
+    4: "37px"
 }
 
 function atualiza_canvas() {
@@ -80,10 +74,15 @@ function atualiza_canvas() {
     ctx.fillRect(5, 5, 90, 90)
 
     ctx.fillStyle = "white"
-    ctx.font = `${siglas[get("sigla").value][2]} Impact`
+    ctx.font = `${siglas[(get("sigla").value).length]} Impact`
 
-    ctx.fillText((get("sigla").value).toUpperCase(), siglas[get("sigla").value][0], siglas[get("sigla").value][1])
+    ctx.textAlign = "center"
+    ctx.textBaseline = "middle"
+    ctx.fillText((get("sigla").value).toUpperCase(), 50, 50)
+
     ctx.shadowColor = "transparent"
+    ctx.textAlign = "start"
+    ctx.textBaseline = "alphabetic"
 
     ctx.font = "bold 16px Verdana"
     ctx.fillStyle = cor_titulo
@@ -209,6 +208,71 @@ function atualiza_canvas() {
     }
 
     ctx.shadowColor = "transparent"
+
+    // Editando o canvas do timbre
+    return
+
+    ctx_timbre.clearRect(0, 0, 910, 110)
+    ctx_timbre.restore()
+
+    if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .1)"
+
+    ctx_timbre.shadowBlur = 4
+
+    ctx_timbre.strokeStyle = "white"
+    ctx_timbre.fillStyle = "white"
+    ctx_timbre.beginPath()
+    ctx_timbre.roundRect(0, 0, 900, 140)
+    ctx_timbre.stroke()
+    ctx_timbre.fill()
+
+    ctx_timbre.fillStyle = `rgba(0, 0, 0, 0)`
+    ctx_timbre.fillRect(0, 0, 900, 140)
+    ctx_timbre.shadowBlur = 2
+
+    ctx_timbre.font = `${siglas[(get("sigla").value).length]} Impact`
+
+    ctx_timbre.textAlign = "center" // Alinhando no centro do ponto
+    ctx_timbre.textBaseline = "middle" // Alinhando no meio da linha
+
+    ctx_timbre.fillText((get("sigla").value).toUpperCase(), 50, 50)
+    ctx_timbre.shadowColor = "transparent"
+
+    ctx_timbre.textAlign = "start"
+    ctx_timbre.textBaseline = "alphabetic"
+
+    ctx_timbre.font = "bold 16px Verdana"
+    ctx_timbre.fillStyle = cor_titulo
+    ctx_timbre.fillText(get("nome").value, 110, 25)
+
+    ctx_timbre.drawImage(image, 15, 25, image_timbre.width, image_timbre.height)
+
+    if ((get("sigla").value).length > 0) {
+
+        const e = get("sigla")
+        if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .1)"
+
+        ctx_timbre.font = "13px Verdana"
+        ctx_timbre.fillStyle = cor_titulo
+        ctx_timbre.fillText(e.options[e.selectedIndex].text, 110, 65)
+
+        ctx_timbre.shadowColor = "transparent"
+    }
+
+    if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .2)"
+
+    ctx_timbre.lineWidth = 10
+    ctx_timbre.strokeStyle = cor_destaque
+
+    ctx_timbre.shadowOffsetX = 0
+    ctx_timbre.shadowOffsetY = 3
+
+    // Linha do topo
+    ctx_timbre.beginPath()
+    ctx_timbre.moveTo(0, 5)
+    ctx_timbre.lineTo(900, 5)
+
+    ctx_timbre.stroke()
 }
 
 atualiza_canvas()
@@ -273,7 +337,7 @@ function mudar_tema(auto) {
 
     } else {
 
-        get("entradas").style.backgroundColor = "#f2f2f2"
+        get("entradas").style.backgroundColor = "rgba(242, 242, 242, .7)"
         document.body.style.color = "black"
 
         if (!auto) localStorage.setItem("tema_rodape", 1)
