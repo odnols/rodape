@@ -6,7 +6,7 @@ canvas.width = 910
 canvas.height = 110
 
 const image = new Image(85, 85)
-image.src = "./brasao.png"
+image.src = "./src/brasao.png"
 
 const canvas_timbre = document.createElement("canvas")
 document.body.appendChild(canvas_timbre)
@@ -16,7 +16,7 @@ canvas_timbre.width = 900
 canvas_timbre.height = 140
 
 const image_timbre = new Image(120, 120)
-image_timbre.src = "./brasao.png"
+image_timbre.src = "./src/brasao.png"
 
 const siglas = {
     2: "65px",
