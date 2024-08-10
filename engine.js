@@ -18,6 +18,17 @@ canvas_timbre.height = 140
 const image_timbre = new Image(120, 120)
 image_timbre.src = "./src/brasao.png"
 
+const icon_mail = new Image(12, 8)
+icon_mail.src = "./src/icon_mail.png"
+
+const icon_tel = new Image(12, 12)
+icon_tel.src = "./src/icon_tel.png"
+
+const icon_pin = new Image(12, 12)
+icon_pin.src = "./src/icon_pin.png"
+
+image_timbre.onload = atualiza_canvas
+
 const siglas = {
     2: "65px",
     3: "55px",
@@ -28,6 +39,8 @@ function atualiza_canvas() {
 
     ctx.clearRect(0, 0, 910, 110)
     ctx.restore()
+
+    const emojis = get("emojis").checked ? true : false
 
     const cor_links = get("check_cor_links").value
     const cor_linha = get("check_cor_linha").value
@@ -49,11 +62,26 @@ function atualiza_canvas() {
         get("select_faixa_superior").style.display = "none"
     }
 
+    ctx.globalCompositeOperation = "source-over"
+
+    if (emojis) {
+
+        ctx.fillStyle = cor_destaque
+
+        ctx.drawImage(icon_mail, 555, 18, icon_mail.width, icon_mail.height)
+        ctx.drawImage(icon_tel, 555, 36, icon_tel.width, icon_tel.height)
+        ctx.drawImage(icon_pin, 555, 55, icon_pin.width, icon_pin.height)
+
+        // Alterando a cor dos icones para a cor em destaque
+        ctx.globalCompositeOperation = "source-atop"
+        ctx.fillRect(552, 15, 18, 55)
+    }
+
     ctx.shadowOffsetX = 3
     ctx.shadowOffsetY = 3
 
-    ctx.shadowColor = "rgba(0, 0, 0, .1)"
-    ctx.shadowBlur = 4
+    // Revertendo o canvas para desenhar atrás
+    ctx.globalCompositeOperation = "destination-over"
 
     ctx.strokeStyle = "white"
     ctx.fillStyle = "white"
@@ -62,8 +90,15 @@ function atualiza_canvas() {
     ctx.stroke()
     ctx.fill()
 
+    ctx.shadowColor = "rgba(0, 0, 0, .1)"
+    ctx.shadowBlur = 4
+
+    ctx.globalCompositeOperation = "source-atop"
+
     ctx.fillStyle = `rgba(0, 0, 0, 0)`
     ctx.fillRect(0, 0, 910, 110)
+
+    ctx.globalCompositeOperation = "source-over"
 
     ctx.shadowColor = "transparent"
     ctx.shadowBlur = 2
@@ -91,8 +126,6 @@ function atualiza_canvas() {
     ctx.drawImage(image, 460, 15, image.width, image.height)
     // ctx.drawImage(logo, 5, 5, logo.width, logo.height)
 
-    const emojis = get("emojis").checked ? true : false
-
     if ((get("cargo").value).length > 0) {
         ctx.font = "13px Verdana"
         ctx.fillStyle = cor_linha
@@ -119,19 +152,19 @@ function atualiza_canvas() {
     if ((get("email").value).length > 0) {
         ctx.font = "13px Verdana"
         ctx.fillStyle = cor_links
-        ctx.fillText(`${emojis ? "📧 " : ""}${get("email").value}`, 550, 25)
+        ctx.fillText(get("email").value, emojis ? 575 : 550, 25)
     }
 
     if ((get("telefone").value).length > 0) {
         ctx.font = "11px Verdana"
         ctx.fillStyle = cor_linha
-        ctx.fillText(`${emojis ? " 📞 " : ""}${get("telefone").value}`, 550, 45)
+        ctx.fillText(get("telefone").value, emojis ? 575 : 550, 45)
     }
 
     if ((get("endereco").value).length > 0) {
         ctx.font = "11px Verdana"
         ctx.fillStyle = "black"
-        ctx.fillText(`${emojis ? "  📍  " : ""}${get("endereco").value}`, 550, 65)
+        ctx.fillText(get("endereco").value, emojis ? 575 : 550, 65)
     }
 
     ctx.font = "12px Verdana"
@@ -274,8 +307,6 @@ function atualiza_canvas() {
 
     ctx_timbre.stroke()
 }
-
-atualiza_canvas()
 
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
