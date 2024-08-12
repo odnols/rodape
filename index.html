@@ -66,9 +66,6 @@
             <input id="ShowButton" type="button" onclick="mudar_tema()" value="🌛">
         </div>
 
-        <!-- <label for="logo">Logo customizada <br><br> -->
-        <!-- <input type="file" id="logo" onchange="previewImage()"></label> -->
-
         <div>
             <input type="checkbox" id="sub_div_check" onchange="atualiza_canvas()" checked="true"> Mostrar subdivisão
             <br>
@@ -81,9 +78,15 @@
                 superior</span>
             <span id="cor_padrao"><input type="checkbox" id="sub_cor_padrao" onchange="redefine_cor()"> Utilizar cores
                 padrões</span>
+            <span id="logo_padrao"><input type="checkbox" id="sub_logo_padrao" onchange="redefine_logo()"> Remover logo
+                customizado</span>
+        </div>
+
+        <div>
+            <label for="logo">Logo customizado<br><br>
+                <input type="file" id="logo" onchange="previewImage()"></label>
         </div>
     </div>
-
 </body>
 
 <script type="text/javascript" src="engine.js"></script>
