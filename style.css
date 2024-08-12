@@ -21,7 +21,7 @@
     background-position: center;
     background: rgb(34, 34, 34);
     background-repeat: no-repeat;
-    background: linear-gradient(180deg, rgb(13, 43, 40) 0%, rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(180deg, rgb(25, 63, 59) 0%, rgb(29, 29, 29) 100%);
 }
 
 #entradas {
@@ -78,7 +78,8 @@ canvas {
     grid-template-columns: auto auto auto auto;
 }
 
-#cor_padrao {
+#cor_padrao,
+#logo_padrao {
     display: none;
 }
 
@@ -87,4 +88,8 @@ canvas {
     height: 35px;
     border-radius: 5px;
     border: 1px black solid;
+}
+
+#timbre {
+    margin-left: 17%;
 }
