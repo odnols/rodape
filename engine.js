@@ -292,7 +292,7 @@ function atualiza_canvas(force) {
 
     ctx.shadowColor = "transparent"
 
-    base64ToBytes()
+    if (!force) base64ToBytes()
 
     // Editando o canvas do timbre
     return
@@ -456,14 +456,18 @@ function base64ToBytes() {
         ls: get("check_cor_linha").value,
         lk: get("check_cor_links").value,
         cd: get("check_cor_destaque").value,
+        sigla_edu: get("sub_sigla_edu").checked,
         emoji: get("emojis").checked,
         bt: get("borda_triangular").checked,
         shw: get("sub_sombra").checked,
+        telefone: get("telefone").value,
+        cargo: get("cargo").value,
         end: get("endereco").value,
         dp: get("sigla").value,
         sub_div: get("subdivisao").value
     }
 
+    // Convertendo de JSON (utf-8) para base 64
     dados = JSON.stringify(dados)
 
     const codeUnits = new Uint16Array(dados.length)
@@ -487,6 +491,9 @@ function carrega_config() {
 
         dados = JSON.parse(String.fromCharCode(...new Uint16Array(bytes.buffer)))
 
+        // Removendo as customizações de logo
+        redefine_logo(true)
+
         // Cores customizadas
         get("check_cor_linha").value = dados.ls
         get("check_cor_links").value = dados.lk
@@ -496,10 +503,13 @@ function carrega_config() {
         get("emojis").checked = dados.emoji
         get("borda_triangular").checked = dados.bt
         get("sub_sombra").checked = dados.shw
+        get("sub_sigla_edu").checked = dados.sigla_edu
 
         // Inputs
         get("subdivisao").value = dados.sub_div
         get("endereco").value = dados.end
+        get("telefone").value = dados.telefone
+        get("cargo").value = dados.cargo
         get("sigla").value = dados.dp
 
         atualiza_canvas()
@@ -507,4 +517,25 @@ function carrega_config() {
     } catch (err) {
         console.log("Código inválido", err)
     }
+}
+
+function myFunction() {
+    let copyText = get("codigo_entrada")
+
+    copyText.select()
+    copyText.setSelectionRange(0, 99999)
+    navigator.clipboard.writeText(copyText.value)
+
+    let tooltip = document.getElementById("myTooltip")
+    if ((copyText.value).length > 0) tooltip.innerHTML = "Código copiado!"
+    else tooltip.innerHTML = "Não há um código aqui... Customize abaixo para poder copiar"
+}
+
+function outFunc() {
+    var tooltip = document.getElementById("myTooltip")
+    tooltip.innerHTML = "Copiar o código de compartilhamento"
+}
+
+async function paste() {
+    get("codigo_entrada").value = await navigator.clipboard.readText()
 }
