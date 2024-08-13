@@ -284,6 +284,8 @@ function atualiza_canvas() {
 
     ctx.shadowColor = "transparent"
 
+    base64ToBytes()
+
     // Editando o canvas do timbre
     return
 
@@ -433,3 +435,62 @@ function mudar_tema(auto) {
 }
 
 mudar_tema(true)
+
+function base64ToBytes() {
+
+    let dados = {
+        ls: get("check_cor_linha").value,
+        lk: get("check_cor_links").value,
+        cd: get("check_cor_destaque").value,
+        emoji: get("emojis").checked,
+        bt: get("borda_triangular").checked,
+        shw: get("sub_sombra").checked,
+        end: get("endereco").value,
+        dp: get("sigla").value,
+        sub_div: get("subdivisao").value
+    }
+
+    dados = JSON.stringify(dados)
+
+    const codeUnits = new Uint16Array(dados.length)
+
+    for (let i = 0; i < codeUnits.length; i++)
+        codeUnits[i] = dados.charCodeAt(i)
+
+    get("codigo_entrada").value = btoa(String.fromCharCode(...new Uint8Array(codeUnits.buffer)))
+}
+
+function carrega_config() {
+
+    try {
+
+        // Decodificando da base64 para utf-8
+        const binary = atob(get("codigo_entrada").value)
+        const bytes = new Uint8Array(binary.length)
+
+        for (let i = 0; i < bytes.length; i++)
+            bytes[i] = binary.charCodeAt(i)
+
+        dados = JSON.parse(String.fromCharCode(...new Uint16Array(bytes.buffer)))
+
+        // Cores customizadas
+        get("check_cor_linha").value = dados.ls
+        get("check_cor_links").value = dados.lk
+        get("check_cor_destaque").value = dados.cd
+
+        // Checkboxes
+        get("emojis").checked = dados.emoji
+        get("borda_triangular").checked = dados.bt
+        get("sub_sombra").checked = dados.shw
+
+        // Inputs
+        get("subdivisao").value = dados.sub_div
+        get("endereco").value = dados.end
+        get("sigla").value = dados.dp
+
+        atualiza_canvas()
+
+    } catch (err) {
+        console.log("Código inválido", err)
+    }
+}
