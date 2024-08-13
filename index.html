@@ -16,7 +16,19 @@
 
     <label for="codigo_entrada">Código de compartilhamento
         <input type="text" id="codigo_entrada" placeholder="Insira um código de compartilhamento aqui"></label>
-    <button onclick="carrega_config()">Carregar código</button>
+
+    <div>
+        <button onclick="carrega_config()">Carregar código</button>
+
+        <div class="tooltip">
+            <button onclick="myFunction()" onmouseout="outFunc()">
+                <span class="tooltiptext" id="myTooltip">Copiar código de compartilhamento</span>
+                Copiar código
+            </button>
+        </div>
+
+        <button onclick="paste()">Colar código</button>
+    </div>
 
     <div id="entradas">
         <label for="nome">Nome
