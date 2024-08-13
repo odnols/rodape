@@ -79,7 +79,8 @@ canvas {
 }
 
 #cor_padrao,
-#logo_padrao {
+#logo_padrao,
+#select_faixa_superior {
     display: none;
 }
 

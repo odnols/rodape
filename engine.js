@@ -33,13 +33,16 @@ icon_pin.src = "./src/icon_pin.png"
 
 image_timbre.onload = atualiza_canvas
 
+const logo_edu = new Image(90, 90)
+logo_edu.src = "./src/logo_edu.png"
+
 const siglas = {
     2: "65px",
     3: "55px",
     4: "37px"
 }
 
-function atualiza_canvas() {
+function atualiza_canvas(force) {
 
     ctx.clearRect(0, 0, 910, 110)
     ctx.restore()
@@ -58,6 +61,11 @@ function atualiza_canvas() {
 
     if (cor_destaque !== "#dd3333" || cor_linha !== "#616161" || cor_links !== "#2b63d4")
         get("cor_padrao").style.display = "block"
+
+    if (get("sub_sigla_edu").checked) logo.src = "./src/logo_edu.png"
+    else if (force) redefine_logo(true)
+
+    localStorage.setItem("sub_sigla_edu", get("sub_sigla_edu").checked ? "1" : "0")
 
     // Logo customizado escolhido
     if (logo.src) get("logo_padrao").style.display = "block"
@@ -372,13 +380,17 @@ function redefine_cor() {
     get("cor_padrao").style.display = "none"
 }
 
-function redefine_logo() {
+function redefine_logo(force) {
 
     logo = new Image(90, 90)
 
+    localStorage.setItem("sub_sigla_edu", "0")
+    get("sub_sigla_edu").checked = 0
+
     get("sub_logo_padrao").checked = false
     get("logo_padrao").style.display = "none"
-    atualiza_canvas()
+
+    if (!force) atualiza_canvas()
 }
 
 function previewImage() {
@@ -413,6 +425,8 @@ function get(alvo) {
 function mudar_tema(auto) {
 
     let tema_atual = localStorage.getItem("tema_rodape")
+
+    get("sub_sigla_edu").checked = parseInt(localStorage.getItem("sub_sigla_edu"))
 
     if (parseInt(tema_atual)) {
         get("entradas").style.backgroundColor = "rgba(0, 0, 0, .2)"
