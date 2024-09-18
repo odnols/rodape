@@ -9,6 +9,7 @@ const image = new Image(85, 85)
 image.src = "./src/brasao.png"
 
 let logo = new Image(90, 90)
+let logo_timbre = new Image(105, 105)
 
 const canvas_timbre = document.createElement("canvas")
 canvas_timbre.id = "timbre"
@@ -17,9 +18,9 @@ document.body.appendChild(canvas_timbre)
 const ctx_timbre = canvas_timbre.getContext("2d")
 
 canvas_timbre.width = 1200
-canvas_timbre.height = 350
+canvas_timbre.height = 150
 
-const image_timbre = new Image(200, 200)
+const image_timbre = new Image(125, 125)
 image_timbre.src = "./src/brasao.png"
 
 const icon_mail = new Image(12, 8)
@@ -31,15 +32,21 @@ icon_tel.src = "./src/icon_tel.png"
 const icon_pin = new Image(11, 11)
 icon_pin.src = "./src/icon_pin.png"
 
-image_timbre.onload = atualiza_canvas
+const tuiuti = new Image(210, 90)
+tuiuti.src = "./src/timbre.png"
 
-const logo_edu = new Image(90, 90)
-logo_edu.src = "./src/logo_edu.png"
+image_timbre.onload = atualiza_canvas
 
 const siglas = {
     2: "65px",
     3: "55px",
     4: "37px"
+}
+
+const siglas_timbre = {
+    2: "80px",
+    3: "63px",
+    4: "44px"
 }
 
 function atualiza_canvas(force) {
@@ -62,8 +69,10 @@ function atualiza_canvas(force) {
     if (cor_destaque !== "#dd3333" || cor_linha !== "#616161" || cor_links !== "#2b63d4")
         get("cor_padrao").style.display = "block"
 
-    if (get("sub_sigla_edu").checked) logo.src = "./src/logo_edu.png"
-    else if (force) redefine_logo(true)
+    if (get("sub_sigla_edu").checked) {
+        logo.src = "./src/logo_edu.png"
+        logo_timbre.src = "./src/logo_edu.png"
+    } else if (force) redefine_logo(true)
 
     localStorage.setItem("sub_sigla_edu", get("sub_sigla_edu").checked ? "1" : "0")
 
@@ -167,7 +176,6 @@ function atualiza_canvas(force) {
     ctx.fillText(get("nome").value, 110, 25)
 
     ctx.drawImage(image, 460, 15, image.width, image.height)
-    // ctx.drawImage(logo, 5, 5, logo.width, logo.height)
 
     if ((get("cargo").value).length > 0) {
         ctx.font = "13px Verdana"
@@ -295,9 +303,7 @@ function atualiza_canvas(force) {
     if (!force) base64ToBytes()
 
     // Editando o canvas do timbre
-    return
-
-    ctx_timbre.clearRect(0, 0, 910, 110)
+    ctx_timbre.clearRect(0, 0, canvas_timbre.width, canvas_timbre.height)
     ctx_timbre.restore()
 
     if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .1)"
@@ -307,15 +313,15 @@ function atualiza_canvas(force) {
     ctx_timbre.strokeStyle = "white"
     ctx_timbre.fillStyle = "white"
     ctx_timbre.beginPath()
-    ctx_timbre.roundRect(0, 0, 1200, 225)
+    ctx_timbre.roundRect(0, 0, canvas_timbre.width, canvas_timbre.height)
     ctx_timbre.stroke()
     ctx_timbre.fill()
 
     ctx_timbre.fillStyle = `rgba(0, 0, 0, 0)`
-    ctx_timbre.fillRect(0, 0, 1200, 225)
+    ctx_timbre.fillRect(0, 0, canvas_timbre.width, canvas_timbre.height)
     ctx_timbre.shadowBlur = 2
 
-    ctx_timbre.font = `${siglas[(get("sigla").value).length]} Impact`
+    ctx_timbre.font = `${siglas_timbre[(get("sigla").value).length]} Impact`
 
     ctx_timbre.textAlign = "center" // Alinhando no centro do ponto
     ctx_timbre.textBaseline = "middle" // Alinhando no meio da linha
@@ -326,27 +332,55 @@ function atualiza_canvas(force) {
     ctx_timbre.textAlign = "start"
     ctx_timbre.textBaseline = "alphabetic"
 
-    ctx_timbre.font = "bold 16px Verdana"
-    ctx_timbre.fillStyle = cor_titulo
-    ctx_timbre.fillText(get("nome").value, 110, 25)
+    ctx_timbre.shadowOffsetX = 3
+    ctx_timbre.shadowOffsetY = 3
+    ctx_timbre.drawImage(image_timbre, 30, 27, image_timbre.width, image_timbre.height)
 
-    ctx_timbre.drawImage(image_timbre, 20, 35, image_timbre.width, image_timbre.height)
+    // Escrevendo o nome do municipio ao lado do brasão
+    ctx_timbre.drawImage(tuiuti, 180, 40, tuiuti.width, tuiuti.height)
+
+    if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .2)"
+
+    const icon_x = 800, icon_y = 30;
+
+    if (!logo.src) {
+        ctx_timbre.fillStyle = cor_destaque
+        ctx_timbre.fillRect(icon_x, icon_y, 105, 105)
+
+        ctx_timbre.fillStyle = "white"
+        ctx_timbre.font = `${siglas_timbre[(get("sigla").value).length]} Impact`
+
+        ctx_timbre.textAlign = "center"
+        ctx_timbre.textBaseline = "middle"
+        ctx_timbre.fillText((get("sigla").value).toUpperCase(), icon_x + 53, icon_y + 55)
+    } else
+        ctx_timbre.drawImage(logo_timbre, icon_x, icon_y, logo_timbre.width, logo_timbre.height)
+
+    ctx_timbre.shadowColor = "transparent"
+    ctx_timbre.textAlign = "start"
+    ctx_timbre.textBaseline = "alphabetic"
 
     if ((get("sigla").value).length > 0) {
 
         const e = get("sigla")
-        if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .1)"
 
-        ctx_timbre.font = "bold 13px Verdana"
+        ctx_timbre.font = "bold 18px Helvetica"
         ctx_timbre.fillStyle = "Black"
-        ctx_timbre.fillText((e.options[e.selectedIndex].text).toUpperCase(), 110, 65)
+
+        let textoQuebrado = quebrarTexto(ctx_timbre, (e.options[e.selectedIndex].text).toUpperCase(), 1050, 75, 250, 20);
+        ctx_timbre.textAlign = "center";
+        ctx_timbre.textBaseline = "middle";
+
+        textoQuebrado.forEach((texto) => {
+            ctx_timbre.fillText(texto[0], texto[1], textoQuebrado.length > 2 ? texto[2] - 5 : textoQuebrado.length === 1 ? texto[2] + 15 : texto[2])
+        })
 
         ctx_timbre.shadowColor = "transparent"
     }
 
     if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .2)"
 
-    ctx_timbre.lineWidth = 20
+    ctx_timbre.lineWidth = 10
     ctx_timbre.strokeStyle = cor_destaque
 
     ctx_timbre.shadowOffsetX = 0
@@ -383,9 +417,10 @@ function redefine_cor() {
 function redefine_logo(force) {
 
     logo = new Image(90, 90)
+    logo_timbre = new Image(105, 105)
 
     localStorage.setItem("sub_sigla_edu", "0")
-    get("sub_sigla_edu").checked = 0
+    get("sub_sigla_edu").checked = false
 
     get("sub_logo_padrao").checked = false
     get("logo_padrao").style.display = "none"
@@ -402,6 +437,9 @@ function previewImage() {
 
         fileReader.onload = function (event) {
             logo.src = event.target.result
+            logo_timbre.src = event.target.result
+
+            get("sub_sigla_edu").checked = false
 
             setTimeout(() => {
                 atualiza_canvas()
@@ -538,4 +576,44 @@ function outFunc() {
 
 async function paste() {
     get("codigo_entrada").value = await navigator.clipboard.readText()
+}
+
+const quebrarTexto = function (ctx, text, x, y, maxWidth, lineHeight) {
+
+    // First, start by splitting all of our text into words, but splitting it into an array split by spaces
+    let words = text.split(' ');
+    let line = ''; // This will store the text of the current line
+    let testLine = ''; // This will store the text when we add a word, to test if it's too long
+    let lineArray = []; // This is an array of lines, which the function will return
+
+    // Lets iterate over each word
+    for (var n = 0; n < words.length; n++) {
+
+        // Create a test line, and measure it..
+        testLine += `${words[n]} `;
+        let metrics = ctx.measureText(testLine);
+        let testWidth = metrics.width;
+
+        // If the width of this test line is more than the max width
+        if (testWidth > maxWidth && n > 0) {
+            // Then the line is finished, push the current line into "lineArray"
+            lineArray.push([line, x, y]);
+            // Increase the line height, so a new line is started
+            y += lineHeight;
+            // Update line and test line to use this word as the first word on the next line
+            line = `${words[n]} `;
+            testLine = `${words[n]} `;
+        }
+        else {
+            // If the test line is still less than the max width, then add the word to the current line
+            line += `${words[n]} `;
+        }
+
+        // If we never reach the full max width, then there is only one line.. so push it into the lineArray so we return something
+        if (n === words.length - 1) {
+            lineArray.push([line, x, y]);
+        }
+    }
+
+    return lineArray;
 }
