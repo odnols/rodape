@@ -70,8 +70,8 @@ function atualiza_canvas(force) {
         get("cor_padrao").style.display = "block"
 
     if (get("sub_sigla_edu").checked) {
-        logo.src = "./src/logo_edu.png"
-        logo_timbre.src = "./src/logo_edu.png"
+        logo.src = "./src/logo_edu.jpg"
+        logo_timbre.src = "./src/logo_edu.jpg"
     } else if (force) redefine_logo(true)
 
     localStorage.setItem("sub_sigla_edu", get("sub_sigla_edu").checked ? "1" : "0")
