@@ -85,14 +85,15 @@
         </div>
 
         <div>
-            <input type="checkbox" id="sub_div_check" onchange="atualiza_canvas()" checked="true"> Mostrar subdivisão
+            <input type="checkbox" id="sub_div_check" onchange="atualiza_canvas()" checked> Mostrar subdivisão
             <br>
-            <input type="checkbox" id="emojis" onchange="atualiza_canvas()" checked="true"> Emojis <br>
-            <input type="checkbox" id="borda_triangular" onchange="atualiza_canvas()" checked="true"> Borda triangular
+            <input type="checkbox" id="emojis" onchange="atualiza_canvas()" checked> Emojis <br>
+            <input type="checkbox" id="borda_triangular" onchange="atualiza_canvas()" checked> Borda triangular
             <br>
-            <input type="checkbox" id="sub_sombra" onchange="atualiza_canvas()" checked="true"> Sobreamento <br>
-            <input type="checkbox" id="sub_sigla_edu" onchange="atualiza_canvas(true)"> Utilizar logo da
-            educação <br>
+            <input type="checkbox" id="sub_sombra" onchange="atualiza_canvas()" checked> Sobreamento <br>
+            <input type="checkbox" id="sub_adorno_logo" onchange="atualiza_canvas()">Adornar logo <br>
+            <input type="checkbox" id="sub_sigla_edu" onchange="atualiza_canvas(true)"> Utilizar logo da educação <br>
+
             <span id="select_faixa_superior"><input type="checkbox" id="faixa_superior" onchange="atualiza_canvas()">
                 Faixa
                 superior</span>
@@ -107,6 +108,8 @@
                 <input type="file" id="logo" onchange="previewImage()"></label>
         </div>
     </div>
+
+    <div id="canvases"></div>
 </body>
 
 <script type="text/javascript" src="engine.js"></script>
