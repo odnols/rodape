@@ -1,5 +1,8 @@
 const canvas = document.createElement("canvas")
-document.body.appendChild(canvas)
+
+const canvases = get("canvases")
+
+canvases.appendChild(canvas)
 const ctx = canvas.getContext("2d")
 
 canvas.width = 910
@@ -9,18 +12,17 @@ const image = new Image(85, 85)
 image.src = "./src/brasao.png"
 
 let logo = new Image(90, 90)
-let logo_timbre = new Image(105, 105)
+let logo_timbre = new Image(125, 125)
 
 const canvas_timbre = document.createElement("canvas")
-canvas_timbre.id = "timbre"
-
-document.body.appendChild(canvas_timbre)
 const ctx_timbre = canvas_timbre.getContext("2d")
 
-canvas_timbre.width = 1200
-canvas_timbre.height = 150
+canvases.appendChild(canvas_timbre)
 
-const image_timbre = new Image(125, 125)
+canvas_timbre.width = 1115
+canvas_timbre.height = 180
+
+const image_timbre = new Image(150, 150)
 image_timbre.src = "./src/brasao.png"
 
 const icon_mail = new Image(12, 8)
@@ -32,7 +34,7 @@ icon_tel.src = "./src/icon_tel.png"
 const icon_pin = new Image(11, 11)
 icon_pin.src = "./src/icon_pin.png"
 
-const tuiuti = new Image(210, 90)
+const tuiuti = new Image(253, 116)
 tuiuti.src = "./src/timbre.png"
 
 image_timbre.onload = atualiza_canvas
@@ -44,9 +46,9 @@ const siglas = {
 }
 
 const siglas_timbre = {
-    2: "80px",
-    3: "63px",
-    4: "44px"
+    2: "100px",
+    3: "75px",
+    4: "51px"
 }
 
 function atualiza_canvas(force) {
@@ -64,6 +66,8 @@ function atualiza_canvas(force) {
     cor_titulo = `rgb(${cor_titulo.r - 21}, ${cor_titulo.g - 20}, ${cor_titulo.b - 20})`
 
     let cor_destaque_2 = hexToRgb(cor_destaque)
+    let cor_destaque_3 = `rgb(${cor_destaque_2.r - 91}, ${cor_destaque_2.g - 72}, ${cor_destaque_2.b - 72})`
+
     cor_destaque_2 = `rgb(${cor_destaque_2.r - 31}, ${cor_destaque_2.g - 22}, ${cor_destaque_2.b - 22})`
 
     if (cor_destaque !== "#dd3333" || cor_linha !== "#616161" || cor_links !== "#2b63d4")
@@ -154,9 +158,44 @@ function atualiza_canvas(force) {
 
     if (get("sub_sombra").checked) ctx.shadowColor = "rgba(0, 0, 0, .2)"
 
+    // Adicionando um adorno ao logo
+    if (get("sub_adorno_logo").checked) {
+
+        let distancia = 6, topo = 0
+
+        ctx.fillStyle = cor_destaque_2
+        ctx.fillRect(5, 5, 90, 90)
+
+        if (get("faixa_superior").checked) topo = 1
+
+        ctx.beginPath()
+        ctx.moveTo(topo ? 0 : 5 - distancia, topo ? 0 : 5 + distancia)
+        ctx.lineTo(5, 5)
+        ctx.lineTo(5, 5 + 90)
+
+        ctx.lineTo(5 - distancia, 5 + 90 + distancia)
+        ctx.lineTo(5 - distancia, 5 + 90)
+        ctx.fill()
+
+        ctx.fillStyle = cor_destaque_3
+
+        ctx.beginPath()
+        ctx.moveTo(5 - distancia, 5 + 90 + distancia)
+        ctx.lineTo(5 - distancia + 90, 5 + 90 + distancia)
+        ctx.lineTo(5 + 90, 5 + 90)
+        ctx.lineTo(5, 5 + 90)
+        ctx.fill()
+    }
+
+    if (get("sub_adorno_logo").checked)
+        ctx.shadowColor = "transparent"
+
     if (!logo.src) {
+
         ctx.fillStyle = cor_destaque
         ctx.fillRect(5, 5, 90, 90)
+
+        if (get("sub_sombra").checked) ctx.shadowColor = "rgba(0, 0, 0, .2)"
 
         ctx.fillStyle = "white"
         ctx.font = `${siglas[(get("sigla").value).length]} Impact`
@@ -189,7 +228,12 @@ function atualiza_canvas(force) {
 
         ctx.font = "13px Verdana"
         ctx.fillStyle = cor_titulo
-        ctx.fillText(e.options[e.selectedIndex].text, 110, 65)
+
+        let textoQuebrado = quebrarTexto(ctx_timbre, e.options[e.selectedIndex].text, 110, 65, 430, 15)
+
+        textoQuebrado.forEach((texto) => {
+            ctx.fillText(texto[0], texto[1], texto[2])
+        })
 
         ctx.shadowColor = "transparent"
     }
@@ -334,25 +378,60 @@ function atualiza_canvas(force) {
 
     ctx_timbre.shadowOffsetX = 3
     ctx_timbre.shadowOffsetY = 3
-    ctx_timbre.drawImage(image_timbre, 30, 27, image_timbre.width, image_timbre.height)
+    ctx_timbre.drawImage(image_timbre, 15, 35, image_timbre.width, image_timbre.height)
 
     // Escrevendo o nome do municipio ao lado do brasão
-    ctx_timbre.drawImage(tuiuti, 180, 40, tuiuti.width, tuiuti.height)
+    ctx_timbre.drawImage(tuiuti, 180, 45, tuiuti.width, tuiuti.height)
 
     if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .2)"
 
-    const icon_x = 800, icon_y = 30;
+    const icon_x = 650, icon_y = 35
+
+    // Adicionando um adorno ao logo
+    if (get("sub_adorno_logo").checked) {
+
+        let distancia = 7
+
+        ctx_timbre.fillStyle = cor_destaque_2
+        ctx_timbre.fillRect(icon_x, icon_y, 125, 125)
+
+        ctx_timbre.fillStyle = cor_destaque_2
+
+        ctx_timbre.beginPath()
+        ctx_timbre.moveTo(icon_x - distancia, icon_y + distancia)
+        ctx_timbre.lineTo(icon_x, icon_y)
+        ctx_timbre.lineTo(icon_x, icon_y + 125)
+
+        ctx_timbre.lineTo(icon_x - distancia, icon_y + 125 + distancia)
+        ctx_timbre.lineTo(icon_x - distancia, icon_y + 125)
+        ctx_timbre.fill()
+
+        ctx_timbre.fillStyle = cor_destaque_3
+
+        ctx_timbre.beginPath()
+        ctx_timbre.moveTo(icon_x - distancia, icon_y + 125 + distancia)
+        ctx_timbre.lineTo(icon_x - distancia + 125, icon_y + 125 + distancia)
+        ctx_timbre.lineTo(icon_x + 125, icon_y + 125)
+        ctx_timbre.lineTo(icon_x, icon_y + 125)
+        ctx_timbre.fill()
+    }
+
+    if (get("sub_adorno_logo").checked)
+        ctx_timbre.shadowColor = "transparent"
 
     if (!logo.src) {
+
         ctx_timbre.fillStyle = cor_destaque
-        ctx_timbre.fillRect(icon_x, icon_y, 105, 105)
+        ctx_timbre.fillRect(icon_x, icon_y, 125, 125)
+
+        if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .2)"
 
         ctx_timbre.fillStyle = "white"
         ctx_timbre.font = `${siglas_timbre[(get("sigla").value).length]} Impact`
 
         ctx_timbre.textAlign = "center"
         ctx_timbre.textBaseline = "middle"
-        ctx_timbre.fillText((get("sigla").value).toUpperCase(), icon_x + 53, icon_y + 55)
+        ctx_timbre.fillText((get("sigla").value).toUpperCase(), icon_x + 62, icon_y + 62)
     } else
         ctx_timbre.drawImage(logo_timbre, icon_x, icon_y, logo_timbre.width, logo_timbre.height)
 
@@ -364,15 +443,17 @@ function atualiza_canvas(force) {
 
         const e = get("sigla")
 
-        ctx_timbre.font = "bold 18px Helvetica"
+        ctx_timbre.font = "bold 24px Helvetica"
         ctx_timbre.fillStyle = "Black"
 
-        let textoQuebrado = quebrarTexto(ctx_timbre, (e.options[e.selectedIndex].text).toUpperCase(), 1050, 75, 250, 20);
-        ctx_timbre.textAlign = "center";
-        ctx_timbre.textBaseline = "middle";
+        // Alinhando o texto no centro e no meio do ponto
+        ctx_timbre.textAlign = "center"
+        ctx_timbre.textBaseline = "middle"
+
+        let textoQuebrado = quebrarTexto(ctx_timbre, (e.options[e.selectedIndex].text).toUpperCase(), 950, 85, 330, 30)
 
         textoQuebrado.forEach((texto) => {
-            ctx_timbre.fillText(texto[0], texto[1], textoQuebrado.length > 2 ? texto[2] - 5 : textoQuebrado.length === 1 ? texto[2] + 15 : texto[2])
+            ctx_timbre.fillText(texto[0], texto[1], textoQuebrado.length > 2 ? texto[2] - 15 : textoQuebrado.length === 1 ? texto[2] + 15 : texto[2])
         })
 
         ctx_timbre.shadowColor = "transparent"
@@ -380,11 +461,21 @@ function atualiza_canvas(force) {
 
     if (get("sub_sombra").checked) ctx_timbre.shadowColor = "rgba(0, 0, 0, .2)"
 
-    ctx_timbre.lineWidth = 10
-    ctx_timbre.strokeStyle = cor_destaque
+    ctx_timbre.lineWidth = 20
+    ctx_timbre.strokeStyle = cor_destaque_2
 
     ctx_timbre.shadowOffsetX = 0
     ctx_timbre.shadowOffsetY = 3
+
+    if (get("borda_triangular").checked) {
+        ctx_timbre.beginPath()
+        ctx_timbre.moveTo(0, 7)
+        ctx_timbre.lineTo(1200, 15)
+
+        ctx_timbre.stroke()
+    }
+
+    ctx_timbre.strokeStyle = cor_destaque
 
     // Linha do topo
     ctx_timbre.beginPath()
@@ -395,12 +486,13 @@ function atualiza_canvas(force) {
 }
 
 function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+
     return result ? {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
-    } : null;
+    } : null
 }
 
 function redefine_cor() {
@@ -417,7 +509,7 @@ function redefine_cor() {
 function redefine_logo(force) {
 
     logo = new Image(90, 90)
-    logo_timbre = new Image(105, 105)
+    logo_timbre = new Image(125, 125)
 
     localStorage.setItem("sub_sigla_edu", "0")
     get("sub_sigla_edu").checked = false
@@ -495,6 +587,7 @@ function base64ToBytes() {
         lk: get("check_cor_links").value,
         cd: get("check_cor_destaque").value,
         sigla_edu: get("sub_sigla_edu").checked,
+        adorno_logo: get("sub_adorno_logo").checked,
         emoji: get("emojis").checked,
         bt: get("borda_triangular").checked,
         shw: get("sub_sombra").checked,
@@ -542,6 +635,7 @@ function carrega_config() {
         get("borda_triangular").checked = dados.bt
         get("sub_sombra").checked = dados.shw
         get("sub_sigla_edu").checked = dados.sigla_edu
+        get("sub_adorno_logo").checked = dados.adorno_logo
 
         // Inputs
         get("subdivisao").value = dados.sub_div
@@ -581,39 +675,39 @@ async function paste() {
 const quebrarTexto = function (ctx, text, x, y, maxWidth, lineHeight) {
 
     // First, start by splitting all of our text into words, but splitting it into an array split by spaces
-    let words = text.split(' ');
-    let line = ''; // This will store the text of the current line
-    let testLine = ''; // This will store the text when we add a word, to test if it's too long
-    let lineArray = []; // This is an array of lines, which the function will return
+    let words = text.split(' ')
+    let line = '' // This will store the text of the current line
+    let testLine = '' // This will store the text when we add a word, to test if it's too long
+    let lineArray = [] // This is an array of lines, which the function will return
 
     // Lets iterate over each word
     for (var n = 0; n < words.length; n++) {
 
         // Create a test line, and measure it..
-        testLine += `${words[n]} `;
-        let metrics = ctx.measureText(testLine);
-        let testWidth = metrics.width;
+        testLine += `${words[n]} `
+        let metrics = ctx.measureText(testLine)
+        let testWidth = metrics.width
 
         // If the width of this test line is more than the max width
         if (testWidth > maxWidth && n > 0) {
             // Then the line is finished, push the current line into "lineArray"
-            lineArray.push([line, x, y]);
+            lineArray.push([line, x, y])
             // Increase the line height, so a new line is started
-            y += lineHeight;
+            y += lineHeight
             // Update line and test line to use this word as the first word on the next line
-            line = `${words[n]} `;
-            testLine = `${words[n]} `;
+            line = `${words[n]} `
+            testLine = `${words[n]} `
         }
         else {
             // If the test line is still less than the max width, then add the word to the current line
-            line += `${words[n]} `;
+            line += `${words[n]} `
         }
 
         // If we never reach the full max width, then there is only one line.. so push it into the lineArray so we return something
         if (n === words.length - 1) {
-            lineArray.push([line, x, y]);
+            lineArray.push([line, x, y])
         }
     }
 
-    return lineArray;
+    return lineArray
 }
