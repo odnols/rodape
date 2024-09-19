@@ -229,7 +229,7 @@ function atualiza_canvas(force) {
         ctx.font = "13px Verdana"
         ctx.fillStyle = cor_titulo
 
-        let textoQuebrado = quebrarTexto(ctx_timbre, e.options[e.selectedIndex].text, 110, 65, 430, 15)
+        let textoQuebrado = quebrarTexto(ctx_timbre, e.options[e.selectedIndex].text, 110, 65, 550, 15)
 
         textoQuebrado.forEach((texto) => {
             ctx.fillText(texto[0], texto[1], texto[2])
