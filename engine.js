@@ -56,7 +56,8 @@ function atualiza_canvas(force) {
     ctx.clearRect(0, 0, 910, 110)
     ctx.restore()
 
-    const emojis = get("emojis").checked ? true : false
+    const emojis = get("emojis").checked
+    const quadro_logo = get("sub_div_quadro_logo").checked
 
     const cor_links = get("check_cor_links").value
     const cor_linha = get("check_cor_linha").value
@@ -159,7 +160,7 @@ function atualiza_canvas(force) {
     if (get("sub_sombra").checked) ctx.shadowColor = "rgba(0, 0, 0, .2)"
 
     // Adicionando um adorno ao logo
-    if (get("sub_adorno_logo").checked) {
+    if (get("sub_adorno_logo").checked && quadro_logo) {
 
         let distancia = 6, topo = 0
 
@@ -190,36 +191,40 @@ function atualiza_canvas(force) {
     if (get("sub_adorno_logo").checked)
         ctx.shadowColor = "transparent"
 
-    if (!logo.src) {
+    if (quadro_logo)
+        if (!logo.src) {
 
-        ctx.fillStyle = cor_destaque
-        ctx.fillRect(5, 5, 90, 90)
+            ctx.fillStyle = cor_destaque
+            ctx.fillRect(5, 5, 90, 90)
 
-        if (get("sub_sombra").checked) ctx.shadowColor = "rgba(0, 0, 0, .2)"
+            if (get("sub_sombra").checked) ctx.shadowColor = "rgba(0, 0, 0, .2)"
 
-        ctx.fillStyle = "white"
-        ctx.font = `${siglas[(get("sigla").value).length]} Impact`
+            ctx.fillStyle = "white"
+            ctx.font = `${siglas[(get("sigla").value).length]} Impact`
 
-        ctx.textAlign = "center"
-        ctx.textBaseline = "middle"
-        ctx.fillText((get("sigla").value).toUpperCase(), 50, 50)
-    } else
-        ctx.drawImage(logo, 5, 5, logo.width, logo.height)
+            ctx.textAlign = "center"
+            ctx.textBaseline = "middle"
+            ctx.fillText((get("sigla").value).toUpperCase(), 50, 50)
+        } else
+            ctx.drawImage(logo, 5, 5, logo.width, logo.height)
 
     ctx.shadowColor = "transparent"
     ctx.textAlign = "start"
     ctx.textBaseline = "alphabetic"
 
+    let distancia_x = 110
+    if (!quadro_logo) distancia_x = 15
+
     ctx.font = "bold 16px Verdana"
     ctx.fillStyle = cor_titulo
-    ctx.fillText(get("nome").value, 110, 25)
+    ctx.fillText(get("nome").value, distancia_x, 25)
 
     ctx.drawImage(image, 460, 15, image.width, image.height)
 
     if ((get("cargo").value).length > 0) {
         ctx.font = "13px Verdana"
         ctx.fillStyle = cor_linha
-        ctx.fillText(get("cargo").value, 110, 45)
+        ctx.fillText(get("cargo").value, distancia_x, 45)
     }
 
     if ((get("sigla").value).length > 0) {
@@ -229,7 +234,7 @@ function atualiza_canvas(force) {
         ctx.font = "13px Verdana"
         ctx.fillStyle = cor_titulo
 
-        let textoQuebrado = quebrarTexto(ctx_timbre, e.options[e.selectedIndex].text, 110, 65, 550, 15)
+        let textoQuebrado = quebrarTexto(ctx_timbre, e.options[e.selectedIndex].text, distancia_x, 65, 550, 15)
 
         textoQuebrado.forEach((texto) => {
             ctx.fillText(texto[0], texto[1], texto[2])
@@ -241,7 +246,7 @@ function atualiza_canvas(force) {
     if ((get("subdivisao").value).length > 0 && get("sub_div_check").checked) {
         ctx.font = "13px Verdana"
         ctx.fillStyle = cor_titulo
-        ctx.fillText(get("subdivisao").value, 110, 85)
+        ctx.fillText(get("subdivisao").value, distancia_x, 85)
     }
 
     let altura_linha = 25
