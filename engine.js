@@ -71,6 +71,7 @@ function atualiza_canvas(force) {
     const cor_links = get("check_cor_links").value
     const cor_linha = get("check_cor_linha").value
     const cor_destaque = get("check_cor_destaque").value
+    const cor_texto_dial = get("check_cor_texto_dial").value
 
     let cor_titulo = hexToRgb(cor_destaque)
     cor_titulo = `rgb(${cor_titulo.r - 21}, ${cor_titulo.g - 20}, ${cor_titulo.b - 20})`
@@ -80,7 +81,7 @@ function atualiza_canvas(force) {
 
     cor_destaque_2 = `rgb(${cor_destaque_2.r - 31}, ${cor_destaque_2.g - 22}, ${cor_destaque_2.b - 22})`
 
-    if (cor_destaque !== "#dd3333" || cor_linha !== "#616161" || cor_links !== "#2b63d4")
+    if (cor_destaque !== "#dd3333" || cor_linha !== "#616161" || cor_links !== "#2b63d4" || cor_texto_dial !== "#ffffff")
         get("cor_padrao").style.display = "block"
 
     if (get("sub_sigla_edu").checked) {
@@ -541,14 +542,14 @@ function atualiza_canvas(force) {
     let angle = Math.PI * 0.8
 
     // Configurações do texto
-    ctx_profile.font = "50px Impact";
-    ctx_profile.textAlign = "center";
-    ctx_profile.fillStyle = "white"
-    ctx_profile.textBaseline = "middle";
-    ctx_profile.lineWidth = 4;
+    ctx_profile.font = "50px Impact"
+    ctx_profile.textAlign = "center"
+    ctx_profile.fillStyle = cor_texto_dial
+    ctx_profile.textBaseline = "middle"
+    ctx_profile.lineWidth = 4
 
-    drawTextAlongArc(ctx_profile, 'Prefeitura de Tuiuti', centerX, centerY, radius, angle);
-    ctx_profile.font = "60px Impact";
+    drawTextAlongArc(ctx_profile, 'Prefeitura de Tuiuti', centerX, centerY, radius, angle)
+    ctx_profile.font = "60px Impact"
 
     const e = get("dial")
     let texto = e.options[e.selectedIndex].text
@@ -556,34 +557,34 @@ function atualiza_canvas(force) {
 
     if (angle > Math.PI) {
         angle = Math.PI
-        ctx_profile.font = "40px Impact";
+        ctx_profile.font = "40px Impact"
     }
 
     // Escrevendo o nome do departamento abaixo
-    ctx_profile.fillStyle = "#BEBEBE"
-    drawTextAlongArc(ctx_profile, texto, centerX, 240, -radius, -angle);
+    ctx_profile.fillStyle = cor_texto_dial
+    drawTextAlongArc(ctx_profile, texto, centerX, 240, -radius, -angle)
 }
 
 // Escreve o texto informado em formato de arco no canvas
 function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
 
-    let len = str.length, s;
+    let len = str.length, s
 
-    context.save();
-    context.translate(centerX, centerY);
-    context.rotate(-1 * angle / 2);
-    context.rotate(-1 * (angle / len) / 2);
+    context.save()
+    context.translate(centerX, centerY)
+    context.rotate(-1 * angle / 2)
+    context.rotate(-1 * (angle / len) / 2)
 
-    for (var n = 0; n < len; n++) {
-        context.rotate(angle / len);
-        context.save();
-        context.translate(0, -1 * radius);
-        s = str[n];
-        context.fillText(s, 0, 0);
-        context.restore();
+    for (let n = 0; n < len; n++) {
+        context.rotate(angle / len)
+        context.save()
+        context.translate(0, -1 * radius)
+        s = str[n]
+        context.fillText(s, 0, 0)
+        context.restore()
     }
 
-    context.restore();
+    context.restore()
 }
 
 function hexToRgb(hex) {
@@ -601,6 +602,8 @@ function redefine_cor() {
     get("check_cor_destaque").value = "#dd3333"
     get("check_cor_links").value = "#2b63d4"
     get("check_cor_linha").value = "#616161"
+    get("check_cor_texto_dial").value = "#ffffff"
+
     atualiza_canvas()
 
     get("sub_cor_padrao").checked = false
