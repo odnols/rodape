@@ -22,6 +22,15 @@ canvases.appendChild(canvas_timbre)
 canvas_timbre.width = 1115
 canvas_timbre.height = 180
 
+const canvas_profile = document.createElement("canvas")
+canvas_profile.id = "canvas_dial"
+const ctx_profile = canvas_profile.getContext("2d")
+
+canvases.appendChild(canvas_profile)
+
+canvas_profile.width = 500
+canvas_profile.height = 500
+
 const image_timbre = new Image(150, 150)
 image_timbre.src = "./src/brasao.png"
 
@@ -351,6 +360,7 @@ function atualiza_canvas(force) {
 
     if (!force) base64ToBytes()
 
+    /*-------------------------------------------------------------------------------------------------------*/
     // Editando o canvas do timbre
     ctx_timbre.clearRect(0, 0, canvas_timbre.width, canvas_timbre.height)
     ctx_timbre.restore()
@@ -488,6 +498,92 @@ function atualiza_canvas(force) {
     ctx_timbre.lineTo(1200, 5)
 
     ctx_timbre.stroke()
+
+    /*-------------------------------------------------------------------------------------------------------*/
+    // Canvas da foto de perfil
+    ctx_profile.clearRect(0, 0, canvas_profile.width, canvas_profile.height)
+
+    ctx_profile.shadowBlur = 10
+    ctx_profile.shadowOffsetX = 2
+    ctx_profile.shadowOffsetY = 2
+
+    // Gradiente de fundo
+    if (!get("dial_transparente").checked) {
+
+        const gradiente = ctx_profile.createLinearGradient(0, canvas_profile.height, canvas_profile.width, 0)
+
+        gradiente.addColorStop(0, cor_destaque_3)
+        gradiente.addColorStop(1, cor_destaque)
+
+        ctx_profile.beginPath();
+        ctx_profile.arc(canvas_profile.width / 2, canvas_profile.height / 2, 0, 1 * Math.PI, 1 * Math.PI)
+        ctx_profile.strokeStyle = gradiente
+        ctx_profile.lineWidth = 498
+        ctx_profile.lineCap = 'round'
+        ctx_profile.stroke()
+    }
+
+    ctx_profile.beginPath()
+    ctx_profile.arc(canvas_profile.width / 2, canvas_profile.height / 2, (canvas_profile.width / 2) - 2, 0, 2 * Math.PI)
+    ctx_profile.lineWidth = 4
+    ctx_profile.strokeStyle = "White"
+    ctx_profile.stroke()
+
+    if (get("sub_sombra").checked) ctx_profile.shadowColor = "rgba(0, 0, 0, .5)"
+
+    ctx_profile.drawImage(image_timbre, canvas_profile.width / 4.76, canvas_profile.height / 4.76, 320, 320)
+
+    ctx_profile.shadowBlur = 3
+
+    const centerX = canvas_profile.width / 2
+    const centerY = canvas_profile.height / 2
+    const radius = 200;
+    let angle = Math.PI * 0.8
+
+    // Configurações do texto
+    ctx_profile.font = "50px Impact";
+    ctx_profile.textAlign = "center";
+    ctx_profile.fillStyle = "white"
+    ctx_profile.textBaseline = "middle";
+    ctx_profile.lineWidth = 4;
+
+    drawTextAlongArc(ctx_profile, 'Prefeitura de Tuiuti', centerX, centerY, radius, angle);
+    ctx_profile.font = "60px Impact";
+
+    const e = get("dial")
+    let texto = e.options[e.selectedIndex].text
+    angle = 0.2 * texto.length
+
+    if (angle > Math.PI) {
+        angle = Math.PI
+        ctx_profile.font = "40px Impact";
+    }
+
+    // Escrevendo o nome do departamento abaixo
+    ctx_profile.fillStyle = "#BEBEBE"
+    drawTextAlongArc(ctx_profile, texto, centerX, 240, -radius, -angle);
+}
+
+// Escreve o texto informado em formato de arco no canvas
+function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
+
+    let len = str.length, s;
+
+    context.save();
+    context.translate(centerX, centerY);
+    context.rotate(-1 * angle / 2);
+    context.rotate(-1 * (angle / len) / 2);
+
+    for (var n = 0; n < len; n++) {
+        context.rotate(angle / len);
+        context.save();
+        context.translate(0, -1 * radius);
+        s = str[n];
+        context.fillText(s, 0, 0);
+        context.restore();
+    }
+
+    context.restore();
 }
 
 function hexToRgb(hex) {

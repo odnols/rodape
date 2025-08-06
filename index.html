@@ -15,7 +15,8 @@
     <div id="gradiente"></div>
 
     <label for="codigo_entrada">Código de compartilhamento
-        <input type="text" id="codigo_entrada" placeholder="Insira um código de compartilhamento aqui"></label>
+        <input type="text" id="codigo_entrada" placeholder="Insira um código de compartilhamento aqui">
+    </label>
 
     <div>
         <button onclick="carrega_config()">Carregar código</button>
@@ -32,18 +33,21 @@
 
     <div id="entradas">
         <label for="nome">Nome
-            <input type="text" id="nome" placeholder="Seu nome" onkeyup="atualiza_canvas()"></label>
+            <input type="text" id="nome" placeholder="Seu nome" onkeyup="atualiza_canvas()">
+        </label>
 
         <label for="email">E-mail
             <input type="text" id="email" placeholder="Seu e-mail" value="...@tuiuti.sp.gov.br"
                 onkeyup="atualiza_canvas()"></label>
 
         <label for="cargo">Cargo
-            <input type="text" id="cargo" placeholder="Seu cargo" onkeyup="atualiza_canvas()"></label>
+            <input type="text" id="cargo" placeholder="Seu cargo" onkeyup="atualiza_canvas()">
+        </label>
 
         <label for="telefone">Telefone
             <input type="text" id="telefone" placeholder="Telefone para contato" value="(11) 4015-XYZW – Ramal X"
-                onkeyup="atualiza_canvas()"></label>
+                onkeyup="atualiza_canvas()">
+        </label>
 
         <label for="sigla">Departamento
             <select id="sigla" name="sigla" onchange="atualiza_canvas()">
@@ -75,14 +79,51 @@
                 <option value="dsur">Departamento de Serviços Urbanos e Rurais</option>
                 <option value="dtcj">Departamento de Turismo, Cultura e Juventude</option>
                 <option value="dgfe">Departamento de Gestão de Frotas e Equipamentos Municipais</option>
-            </select></label>
+            </select>
+        </label>
 
         <label for="endereco">Endereço
             <input type="text" id="endereco" placeholder="Seu endereço de trabalho"
-                value="Rua Zeferino de Lima, 117 – Centro – Tuiuti / SP" onkeyup="atualiza_canvas()"></label>
+                value="Rua Zeferino de Lima, 117 – Centro – Tuiuti / SP" onkeyup="atualiza_canvas()">
+        </label>
 
         <label for="subdivisao">Subdivisão
-            <input type="text" id="subdivisao" placeholder="A subdivisão" onkeyup="atualiza_canvas()"></label>
+            <input type="text" id="subdivisao" placeholder="A subdivisão" onkeyup="atualiza_canvas()">
+        </label>
+        <br>
+
+        <label for="dial">Dial
+            <select id="dial" name="dial" onchange="atualiza_canvas()">
+                <option value="ci">Educação</option>
+                <option value="ci">Controle Interno</option>
+                <option value="dc">Defesa Civil</option>
+                <option value="gc">Convênios e Parcerias Públicas</option>
+                <option value="dj">Jurídico</option>
+                <option value="dp">Planejamento</option>
+                <option value="ds">Saúde</option>
+                <option value="gp">Gabinete do Prefeito</option>
+                <option value="cpr">Compras</option>
+                <option value="lc">Licitações</option>
+                <option value="rh">Recursos Humanos</option>
+                <option value="ti">Tecnologia da informação</option>
+                <option value="ct">Conselho Tutelar</option>
+                <option value="fss">Fundo Social de Solidariedade</option>
+                <option value="daf">Administração e Finanças</option>
+                <option value="das">Assistência Social</option>
+                <option value="del">Esporte e Lazer</option>
+                <option value="doe">Obras e Engenharia</option>
+                <option value="ce">Especialidades</option>
+                <option value="ca">Ambulância</option>
+                <option value="cati">Casa da Agricultura</option>
+                <option value="dvs">Vigilância Sanitária</option>
+                <option value="dte">Transporte Escolar</option>
+                <option value="dts">Transportes da Saúde</option>
+                <option value="dama">Agricultura e Meio Ambiente</option>
+                <option value="dsur">Serviços Urbanos e Rurais</option>
+                <option value="dtcj">Turismo, Cultura e Juventude</option>
+                <option value="dgfe">Gestão de Frotas e Equipamentos Municipais</option>
+            </select>
+        </label>
 
         <div id="tab_cores">
             <div><input type="color" id="check_cor_linha" value="#616161" onchange="atualiza_canvas()"> Linha secundária
@@ -112,11 +153,14 @@
                 padrões</span>
             <span id="logo_padrao"><input type="checkbox" id="sub_logo_padrao" onchange="redefine_logo()"> Remover logo
                 customizado</span>
+
+            <input type="checkbox" id="dial_transparente" onchange="atualiza_canvas()"> Dial transparente
         </div>
 
         <div>
             <label for="logo">Logo customizado<br><br>
-                <input type="file" id="logo" onchange="previewImage()"></label>
+                <input type="file" id="logo" onchange="previewImage()">
+            </label>
         </div>
     </div>
 

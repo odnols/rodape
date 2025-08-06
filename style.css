@@ -134,3 +134,10 @@ canvas {
     visibility: visible;
     opacity: 1;
 }
+
+#canvas_dial {
+    left: 5%;
+    width: 250px;
+    margin-top: 1%;
+    position: absolute;
+}
